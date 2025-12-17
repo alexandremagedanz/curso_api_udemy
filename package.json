@@ -1,0 +1,20 @@
+{
+  "name": "exemplo",
+  "version": "1.0.0",
+  "description": "Minha primeira API",
+  "homepage": "https://github.com/alexandremagedanz/curso_api_udemy#readme",
+  "bugs": {
+    "url": "https://github.com/alexandremagedanz/curso_api_udemy/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexandremagedanz/curso_api_udemy.git"
+  },
+  "license": "ISC",
+  "author": "Alexandre Magedanz",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
