@@ -1,21 +1,33 @@
-const http = require('http');
-const url = require('url');
+const express = require('express')
 
-http.createServer((request, respose) => {
-    const parseUrl = url.parse(request.url, true)
-    const pathName = parseUrl.pathName
-    const queryParms = parseUrl.query
+const app = express()
+const porta = 3000
 
-    if (pathName === '/favicon.ico') {
-        respose.writeHead(404)
-        respose.end();
-        return;
-    }
-    console.log(queryParms)
+app.get('/api/somar', (req, res) => {
+    const {num1, num2} = req.query
+    res.send('Oi, a soma é ' + (Number(num1) + Number(num2)))
+})
 
-    if (request.method === 'GET'){
-        respose.writeHead(200, {'Content-Type': 'text/plain; charset=utf-8'})
-        respose.write('A Soma é ' + (Number(queryParms.num1) + Number(queryParms.num2)));
-        respose.end(); 
-    }
-}).listen(9090)
+app.get('/api/subtrair', (req, res) => {
+    const {num1, num2} = req.query
+    res.send('Oi, a soma é ' + (Number(num1) - Number(num2)))
+})
+
+app.get('/api/dividir', (req, res) => {
+    const {num1, num2} = req.query
+    res.send('Oi, a soma é ' + (Number(num1) / Number(num2)))
+})
+
+app.get('/api/multiplicar', (req, res) => {
+    const {num1, num2} = req.query
+    res.send('Oi, a soma é ' + (Number(num1) * Number(num2)))
+})
+
+app.get('/api/media', (req, res) => {
+    const {num1, num2} = req.query
+    res.send('Oi, a soma é ' + ((Number(num1) + Number(num2)) / 2))
+})
+
+app.listen(porta, () => {
+    console.log('Servidor rodando na porta ' + porta + '!')
+})
