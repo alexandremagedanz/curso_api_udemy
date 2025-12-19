@@ -1,32 +1,25 @@
 const express = require('express')
+const {
+    apiSomar,
+    apiSubtrair,
+    apiDividir,
+    apiMultiplicar,
+    apiMedia
+} = require('./api/operacoes')
 
 const app = express()
 const porta = 3000
+app.use(express.json())
 
-app.get('/api/somar', (req, res) => {
-    const {num1, num2} = req.query
-    res.send('Oi, a soma é ' + (Number(num1) + Number(num2)))
-})
+app.post('/api/somar', apiSomar)
 
-app.get('/api/subtrair', (req, res) => {
-    const {num1, num2} = req.query
-    res.send('Oi, a soma é ' + (Number(num1) - Number(num2)))
-})
+app.post('/api/subtrair', apiSubtrair)
 
-app.get('/api/dividir', (req, res) => {
-    const {num1, num2} = req.query
-    res.send('Oi, a soma é ' + (Number(num1) / Number(num2)))
-})
+app.post('/api/dividir', apiDividir)
 
-app.get('/api/multiplicar', (req, res) => {
-    const {num1, num2} = req.query
-    res.send('Oi, a soma é ' + (Number(num1) * Number(num2)))
-})
+app.post('/api/multiplicar', apiMultiplicar)
 
-app.get('/api/media', (req, res) => {
-    const {num1, num2} = req.query
-    res.send('Oi, a soma é ' + ((Number(num1) + Number(num2)) / 2))
-})
+app.post('/api/media', apiMedia)
 
 app.listen(porta, () => {
     console.log('Servidor rodando na porta ' + porta + '!')
