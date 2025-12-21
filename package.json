@@ -1,23 +1,26 @@
 {
-  "name": "exemplo",
+  "name": "api-node",
   "version": "1.0.0",
-  "description": "Minha primeira API",
-  "homepage": "https://github.com/alexandremagedanz/curso_api_udemy#readme",
-  "bugs": {
-    "url": "https://github.com/alexandremagedanz/curso_api_udemy/issues"
+  "main": "index.js",
+  "scripts": {
+    "dev": "node --watch index.js",
+    "test": "jest test/*"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/alexandremagedanz/curso_api_udemy.git"
   },
+  "author": "",
   "license": "ISC",
-  "author": "Alexandre Magedanz",
-  "type": "commonjs",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "bugs": {
+    "url": "https://github.com/alexandremagedanz/curso_api_udemy/issues"
   },
+  "homepage": "https://github.com/alexandremagedanz/curso_api_udemy#readme",
+  "description": "",
   "dependencies": {
     "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "jest": "^30.2.0"
   }
 }
