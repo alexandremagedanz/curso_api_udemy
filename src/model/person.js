@@ -1,27 +1,31 @@
 const database = require("../database");
-const person = require("./person");
+const user = require("./user");
 
-class User {
+class Person {
     constructor() {
-        this.model = database.db.define('users', {
+        this.model = database.db.define('people', {
             id: {
                 type: database.db.Sequelize.INTEGER,
                 primaryKey: true,
                 autoIncrement: true
             },
-            email: {
+            name: {
                 type: database.db.Sequelize.STRING,
-                unique: true,
                 allowNull: false
             }, 
-            password: {
+            address: {
                 type: database.db.Sequelize.STRING,
                 allowNull: false
+            },
+            userId: {
+                type: database.db.Sequelize.INTEGER,
+                references: {
+                    model: "users",
+                    key: "id"
+                }
             }   
         })
-        this.model.hasOne(person, { foreignKey: 'userId' })
-        person.belongsTo(this.model, { foreignKey: 'userId' })
     }
 }
 
-module.exports = new User().model;
+module.exports = new Person().model;

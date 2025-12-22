@@ -1,9 +1,9 @@
-const serviceUser = require("../services/user")
+const servicePerson = require("../services/person")
 
-class apiUser {
+class apiPerson {
     async findAll(_, res) {
         try {   
-            const result = await serviceUser.findAll()
+            const result = await servicePerson.findAll()
             res.status(200).send({ result })
         } catch (error) {
             res.status(500).send({ msg: error.message })
@@ -13,7 +13,7 @@ class apiUser {
     async findById(req, res) {
         try {
             const {id} = req.params
-            const result = await serviceUser.findById(id)
+            const result = await servicePerson.findById(id)
             res.status(200).send({ result })
         } catch (error) {
             res.status(500).send({ msg: error.message })
@@ -22,8 +22,8 @@ class apiUser {
 
     async create(req, res) {
         try {
-            const {email, password} = req.body
-            await serviceUser.create(email, password)
+            const {name, address, userId} = req.body
+            await servicePerson.create(name, address, userId)
             res.status(201).send()
         } catch (error) {
             res.status(500).send({ msg: error.message })
@@ -32,9 +32,9 @@ class apiUser {
 
     async update(req, res) {
         try {
-            const {email, password} = req.body
+            const {name, address} = req.body
             const {id} = req.params
-            const result = await serviceUser.update(id, email, password)
+            const result = await servicePerson.update(id, name, address)
             res.status(200).send({ result })
         } catch (error) {
             res.status(500).send({ msg: error.message })
@@ -44,7 +44,7 @@ class apiUser {
     async delete(req, res) {
         try {
             const {id} = req.params
-            await serviceUser.delete(id)
+            await servicePerson.delete(id)
             res.status(204).send()
         } catch (error) {
             res.status(500).send({ msg: error.message })
@@ -52,4 +52,4 @@ class apiUser {
     }
 }
 
-module.exports = new apiUser();
+module.exports = new apiPerson();

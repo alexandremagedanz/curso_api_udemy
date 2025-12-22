@@ -7,23 +7,20 @@ class serviceUser {
     async findById(id) {
         return await user.findByPk(id)
     }
-    async create(name, email, password) {
-        if (!name ) {
-            throw new Error("Name is required")
-        } else if (!email) {
+    async create(email, password) {
+        if (!email) {
             throw new Error("Email is required")
         } else if (!password) {
             throw new Error("Password is required")
         } 
 
         await user.create({ 
-            name, email, password 
+            email, password 
         })
     }
-    async update(id, name, email, password) {
+    async update(id, email, password) {
         const oldUser = await this.findById(id)
 
-        oldUser.name = name || oldUser.name
         oldUser.email = email || oldUser.email
         oldUser.password = password || oldUser.password
 

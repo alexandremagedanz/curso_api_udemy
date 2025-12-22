@@ -2,12 +2,12 @@ const apiUser = require('../api/user')
 
 const express = require('express')
 
-const router = express.Router()
+const routerUser = express.Router()
 
-router.get('/', apiUser.findAll)
-router.get('/:id', apiUser.findById)
-router.post('/', apiUser.create)
-router.put('/:id', apiUser.update)
-router.delete('/:id', apiUser.delete)
+routerUser.get('/', apiUser.findAll)
+routerUser.get('/:id', apiUser.findById)
+routerUser.post('/', apiUser.create)
+routerUser.put('/:id', apiUser.update)
+routerUser.delete('/:id', apiUser.delete)
 
-module.exports = router
+module.exports = routerUser
