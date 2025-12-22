@@ -1,20 +1,40 @@
 const user = require("../model/user")
 
 class serviceUser {
-    findAll() {
-        return user.findAll();
+    async findAll() {
+        return await user.findAll()
     }
-    findByIndex(index) {
-        return user.findByIndex(index);
+    async findById(id) {
+        return await user.findByPk(id)
     }
-    create(name) {
-        user.create(name);
+    async create(name, email, password) {
+        if (!name ) {
+            throw new Error("Name is required")
+        } else if (!email) {
+            throw new Error("Email is required")
+        } else if (!password) {
+            throw new Error("Password is required")
+        } 
+
+        await user.create({ 
+            name, email, password 
+        })
     }
-    update(index, name) {
-        user.update(index, name);
+    async update(id, name, email, password) {
+        const oldUser = await this.findById(id)
+
+        oldUser.name = name || oldUser.name
+        oldUser.email = email || oldUser.email
+        oldUser.password = password || oldUser.password
+
+        await oldUser.save()
+
+        return oldUser
+
     }
-    delete(index) {
-        user.delete(index);
+    async delete(id) {
+        const user = await this.findById(id)
+        await user.destroy()
     }
 }
 

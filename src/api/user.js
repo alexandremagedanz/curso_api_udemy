@@ -1,51 +1,50 @@
 const serviceUser = require("../services/user")
 
 class apiUser {
-    findAll(_, res) {
+    async findAll(_, res) {
         try {   
-            const result = serviceUser.findAll()
+            const result = await serviceUser.findAll()
             res.status(200).send({ result })
         } catch (error) {
             res.status(500).send({ msg: error.message })
         }
     }
 
-    findByIndex(req, res) {
+    async findById(req, res) {
         try {
-            const {index} = req.params
-            const result = serviceUser.findByIndex(index)
+            const {id} = req.params
+            const result = await serviceUser.findById(id)
             res.status(200).send({ result })
         } catch (error) {
             res.status(500).send({ msg: error.message })
         }
     }
 
-    create(req, res) {
+    async create(req, res) {
         try {
-            const {name} = req.body
-            serviceUser.create(name)
+            const {name, email, password} = req.body
+            await serviceUser.create(name, email, password)
             res.status(201).send()
         } catch (error) {
             res.status(500).send({ msg: error.message })
         }
     }
 
-    update(req, res) {
+    async update(req, res) {
         try {
-            const {name} = req.body
-            const {index} = req.params
-            serviceUser.update(index, name)
-            const result = serviceUser.findByIndex(index)
+            const {name, email, password} = req.body
+            const {id} = req.params
+            const result = await serviceUser.update(id, name, email, password)
             res.status(200).send({ result })
         } catch (error) {
             res.status(500).send({ msg: error.message })
         }
     }
 
-    delete(req, res) {
+    async delete(req, res) {
         try {
-            const {index} = req.params
-            serviceUser.delete(index)
+            const {id} = req.params
+            await serviceUser.delete(id)
             res.status(204).send()
         } catch (error) {
             res.status(500).send({ msg: error.message })
