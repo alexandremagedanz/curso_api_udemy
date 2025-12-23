@@ -1,5 +1,6 @@
 const database = require("../../src/database");
 const serviceUser = require("../../src/services/user")
+
 describe("Teste de Usuário", () => {
  
     beforeAll(async () => {
