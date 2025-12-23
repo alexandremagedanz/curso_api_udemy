@@ -1,37 +1,38 @@
 const user = require("../model/user")
 
 class serviceUser {
-    async findAll() {
-        return await user.findAll()
+    async findAll(transaction) {
+        return await user.findAll({ transaction })
     }
-    async findById(id) {
-        return await user.findByPk(id)
+    async findById(id, transaction) {
+        return await user.findByPk(id, { transaction })
     }
-    async create(email, password) {
+    async create(email, password, transaction) {
         if (!email) {
             throw new Error("Email is required")
         } else if (!password) {
             throw new Error("Password is required")
         } 
 
-        await user.create({ 
+        return user.create({ 
             email, password 
-        })
+        }, { transaction })
     }
-    async update(id, email, password) {
-        const oldUser = await this.findById(id)
+    async update(id, email, password, transaction) {
+        const oldUser = await this.findById(id, transaction)
 
         oldUser.email = email || oldUser.email
         oldUser.password = password || oldUser.password
 
-        await oldUser.save()
+        await oldUser.save({transaction})
 
         return oldUser
 
     }
-    async delete(id) {
-        const user = await this.findById(id)
-        await user.destroy()
+    async delete(id, transaction) {
+        const user = await this.findById(id, transaction)
+        await user.destroy({transaction})
+        return true
     }
 }
 
