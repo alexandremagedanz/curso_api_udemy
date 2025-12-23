@@ -50,6 +50,15 @@ class apiUser {
             res.status(500).send({ msg: error.message })
         }
     }
+    async login(req, res) {
+        try {
+            const {email, password} = req.body
+            const token = await serviceUser.login(email, password)
+            res.status(200).send({ token })
+        } catch (error) {
+            res.status(500).send({ msg: error.message })
+        }
+    }
 }
 
 module.exports = new apiUser();

@@ -1,4 +1,7 @@
+const jwt = require("jsonwebtoken")
 const user = require("../model/user")
+require('dotenv').config();
+const secretkey = process.env.DB_SECRETKEY
 
 class serviceUser {
     async findAll(transaction) {
@@ -33,6 +36,26 @@ class serviceUser {
         const user = await this.findById(id, transaction)
         await user.destroy({transaction})
         return true
+    }
+    async login(email, password) {
+        if (!email) {
+            throw new Error("Email is required")
+        } else if (!password) {
+            throw new Error("Password is required")
+        } 
+        const currentUser = await user.findOne({ where: { email } })
+
+        if (!currentUser) {
+            throw new Error("Invalid email or password")
+        }
+        if (currentUser.password === password) {
+            return jwt.sign(
+                { id: currentUser.id }, 
+                secretkey, 
+                { expiresIn: 60 * 60 }
+            )
+        }
+        throw new Error("Invalid email or password")
     }
 }
 
