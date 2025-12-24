@@ -1,7 +1,9 @@
 const jwt = require("jsonwebtoken")
 const user = require("../model/user")
+const bcrypt = require("bcrypt")
 require('dotenv').config();
 const secretkey = process.env.DB_SECRETKEY
+const salts = 10
 
 class serviceUser {
     async findAll(transaction) {
@@ -17,15 +19,17 @@ class serviceUser {
             throw new Error("Password is required")
         } 
 
+        const hashPass = await bcrypt.hash(password, salts)
+
         return user.create({ 
-            email, password 
+            email, password: hashPass
         }, { transaction })
     }
     async update(id, email, password, transaction) {
         const oldUser = await this.findById(id, transaction)
 
         oldUser.email = email || oldUser.email
-        oldUser.password = password || oldUser.password
+        oldUser.password = password ? await bcrypt.hash(password, salts) : oldUser.password
 
         await oldUser.save({transaction})
 
@@ -48,7 +52,10 @@ class serviceUser {
         if (!currentUser) {
             throw new Error("Invalid email or password")
         }
-        if (currentUser.password === password) {
+
+        const verifyUser = await bcrypt.compare(password, currentUser.password)
+
+        if (verifyUser) {
             return jwt.sign(
                 { id: currentUser.id }, 
                 secretkey, 
