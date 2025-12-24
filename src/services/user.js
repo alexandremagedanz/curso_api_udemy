@@ -3,7 +3,7 @@ const user = require("../model/user")
 const bcrypt = require("bcrypt")
 require('dotenv').config();
 const secretkey = process.env.DB_SECRETKEY
-const salts = 10
+const salts = Number(process.env.DB_SALT_ROUNDS)
 
 class serviceUser {
     async findAll(transaction) {
